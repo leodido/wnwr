@@ -1,9 +1,11 @@
-Package: wnr
-Type: Package
-Title: What the package does (short line)
-Version: 1.0
-Date: 2014-03-08
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Package: wnwr
+Title: A WordNet wrapper.
+Version: 0.1
+Author: Leonardo Di Donato <leodidonato@gmail.com>
+Maintainer: Leonardo Di Donato <leodidonato@gmail.com>
+Description: A R wrapper for the WordNet command (i.e., wn).
+License: GPL-3
+URL: https://github.com/leodido/wnwr
+BugReports: https://github.com/leodido/wnwr/issues
+Depends:
+  R (>= 3.0.0)
