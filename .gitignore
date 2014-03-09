@@ -1,3 +1,7 @@
+.R*
+*.so
+*.o
+*.dll
+*.Rproj
+*.sublime*
 .Rproj.user
-.Rhistory
-.RData
