@@ -16,13 +16,13 @@ test_that("Errors covering 'word' argument", {
 test_that("Errors covering 'search' argument", {
   expect_that(wn_cmd('word'), throws_error('is missing'))
   expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
-  expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
+  expect_that(wn_cmd('word', NA_integer_), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NULL), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NA), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NA_character_), throws_error('contains empty or missing values'))
   expect_that(wn_cmd('word', ''), throws_error('contains empty or missing values'))
-  expect_that(wn_cmd('w', c('')), throws_error('contains empty or missing values'))
-  expect_that(wn_cmd('w', c('x')), throws_error('should be one of'))
+  expect_that(wn_cmd('word', c('')), throws_error('contains empty or missing values'))
+  expect_that(wn_cmd('word', c('x')), throws_error('should be one of'))
 })
 
 test_search_arg <- function(x) {
@@ -58,10 +58,25 @@ test_that('Supported search types', {
   ))
 })
 
-# test_that('Function \'opts\' parameter', {
-#   
-# })
-# 
-# test_that('Function \'sense_num\' parameter', {
-#   
-# })
+test_that("Errors covering 'opt' argument", {
+  expect_that(wn_cmd('word', search_type[1], NA), throws_error('must be NULL or a character vector'))
+  expect_that(wn_cmd('word', search_type[1], 1L), throws_error('must be NULL or a character vector'))
+  expect_that(wn_cmd('word', search_type[1], 'x'), throws_error('should be one of'))
+  expect_that(wn_cmd('word', search_type[1], c('x')), throws_error('should be one of'))
+  expect_that(wn_cmd('word', search_type[1], NA_character_), throws_error('should be one of'))
+  expect_that(wn_cmd('word', search_type[1], c('x', 'y')), throws_error('must be of length 1'))
+})
+
+test_that("Supported search options", {
+  expect_equal(wn_cmd('word', search_type[1]), paste0("wn 'word' -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], NULL), paste0("wn 'word' -", search_type[1]))
+  # all supported options
+  invisible(lapply(
+    search_opts,
+    function(o) expect_equal(wn_cmd('word', search_type[1], o), paste0("wn 'word' -", o, " -", search_type[1]))
+  ))
+})
+
+test_that("Errors covering 'sense_num' argument", {
+  
+})

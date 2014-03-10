@@ -1,4 +1,4 @@
-wn_cmd <- function(word, search, opts = NULL, sense_num = NULL) {
+wn_cmd <- function(word, search, opt = NULL, sense_num = NULL) {
   # check word arg
   if (missing(word)) stop(missing_message(word))
   assert_that(not_empty_string(word))
@@ -6,12 +6,13 @@ wn_cmd <- function(word, search, opts = NULL, sense_num = NULL) {
   if (missing(search)) stop(missing_message(search))
   assert_that(not_empty_character_vector(search))
   search <- match.arg(search, getOption('wnr.supported.search.types'), several.ok = TRUE)
-  # check opts arg
-  opts <- match.arg(opts, c(NA, getOption('wnr.supported.search.opts')), several.ok = TRUE)
+  # check opt arg
+  current_opt <- as.list(environment())$opt
+  opt <- match.arg(opt, getOption('wnr.supported.search.opts'))
   
   if (initDict()) {
     cmd <- paste('wn', shQuote(word))
-    if (!is.na(opts[1])) cmd <- paste(cmd, paste(opts, collapse = ' -'), sep = ' -')
+    if (identical(current_opt, opt)) cmd <- paste(cmd, opt, sep = ' -')
     if (!is.null(sense_num)) {
       assert_that(is.count(sense_num))
       cmd <- paste(cmd, sense_num, sep = ' -n')
