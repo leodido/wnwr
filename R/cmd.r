@@ -26,13 +26,3 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL, info = FALSE) {
     stop('wordnet not found.')
   }
 }
-
-# output <- suppressWarnings(tryCatch(system(cmd, intern = TRUE), error = I))
-# if (length(output) > 0) {
-# TODO: process output
-# attrs <- attributes(output)
-# found_senses <- attrs$status    
-# return(list(res = paste(output, collpase = ''), found_senses = found_senses))
-# } else {
-#   return(NULL)
-# }

@@ -6,6 +6,8 @@
 #' \itemize{
 #'   \item \code{wnwr.supported.search.types}: vector of supported search types
 #'   \item \code{wnwr.supported.search.opts}: vector of supported search options
+#'   \item \code{wnwr.supported.synset.types}: vector of supported synset types
+#'   \item \code{wnwr.wn.command}: wordnet shell command
 #' }
 #' @docType package
 #' @name wnwr
@@ -42,12 +44,14 @@ search_type <- c(
 )
 search_opts <- c('h', 'g', 'l', 'a', 'o', 's')
 wn_command <- 'wn'
+synset_types <- c('noun', 'verb', 'adjective', 'adverb')
 
 .onLoad <- function(libname, pkgname) {
   ops <- options()
   wnwr_opts <- list(
     wnwr.supported.search.types = search_type,
     wnwr.supported.search.opts = search_opts,
+    wnwr.supported.synset.types = synset_types,
     wnwr.wn.command = wn_command
   )
   to_set <- !(names(wnwr_opts) %in% names(ops))
