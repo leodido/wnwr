@@ -1,8 +1,12 @@
-wn_cmd <- function(word, search = NULL, opts = NULL, sense_num = NULL) {
+wn_cmd <- function(word, search, opts = NULL, sense_num = NULL) {
   if (missing(word)) stop(missing_message(word))
-  assert_that(is.string(word))
-  search <- match.arg(search, c(NA, getOption('wnr.supported.search.types')), several.ok = TRUE)
-  if (is.na(search[1])) stop(' the parameter "search" requires a string or a vector of strings.')
+  assert_that(not_empty_string(word))
+  if (missing(search)) stop(missing_message(search))
+  assert_that(not_empty(search))
+  search <- match.arg(search, getOption('wnr.supported.search.types'), several.ok = TRUE)
+  print(search)
+  if (is.na(search)) stop(na_message(search))
+  # if (is.na(search[1])) stop(' the parameter "search" requires a string or a vector of strings.')
   opts <- match.arg(opts, c(NA, getOption('wnr.supported.search.opts')), several.ok = TRUE)  
   if (!is.null(sense_num) && !is.integer(sense_num)) stop('the parameter "sense_num" requioutput an integer value.')
   
@@ -25,5 +29,3 @@ wn_cmd <- function(word, search = NULL, opts = NULL, sense_num = NULL) {
     stop('wordnet not found.')
   }
 }
-
-missing_message <- function(var) paste0("'", deparse(substitute(var)), "'", " is missing.")
