@@ -1,12 +1,12 @@
 wn_cmd <- function(word, search, opts = NULL, sense_num = NULL) {
+  # check word arg
   if (missing(word)) stop(missing_message(word))
   assert_that(not_empty_string(word))
+  # check search arg
   if (missing(search)) stop(missing_message(search))
-  assert_that(not_empty(search))
+  assert_that(not_empty_character_vector(search))
   search <- match.arg(search, getOption('wnr.supported.search.types'), several.ok = TRUE)
-  print(search)
-  if (is.na(search)) stop(na_message(search))
-  # if (is.na(search[1])) stop(' the parameter "search" requires a string or a vector of strings.')
+  # check opts arg
   opts <- match.arg(opts, c(NA, getOption('wnr.supported.search.opts')), several.ok = TRUE)  
   if (!is.null(sense_num) && !is.integer(sense_num)) stop('the parameter "sense_num" requioutput an integer value.')
   

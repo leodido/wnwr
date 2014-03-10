@@ -1,6 +1,6 @@
 context('Shell command syntax')
 
-test_that('Function \'word\' parameter', {
+test_that("Errors covering 'word' argument", {
   expect_that(wn_cmd(), throws_error('is missing'))
   expect_that(wn_cmd(c()), throws_error('not a string'))
   expect_that(wn_cmd(c('x', 'y')), throws_error('not a string'))
@@ -13,14 +13,18 @@ test_that('Function \'word\' parameter', {
   expect_that(wn_cmd(''), throws_error('empty string'))
 })
 
-test_that('Function \'search\' parameter', {
+test_that("Errors covering 'search' argument", {
   expect_that(wn_cmd('word'), throws_error('is missing'))
-  expect_that(wn_cmd('word', c()), throws_error())
-  expect_that(wn_cmd('word', NULL), throws_error())
-  expect_that(wn_cmd('word', NA), throws_error())
-  expect_that(wn_cmd('word', NA_character_), throws_error())
-  expect_that(wn_cmd('word', ''), throws_error('should be one of'))
+  expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
+  expect_that(wn_cmd('word', NULL), throws_error('not a character vector'))
+  expect_that(wn_cmd('word', NA), throws_error('not a character vector'))
+  expect_that(wn_cmd('word', NA_character_), throws_error('contains empty or missing values'))
+  expect_that(wn_cmd('word', ''), throws_error('search contains empty or missing values'))
+  expect_that(wn_cmd('w', c('')), throws_error('search contains empty or missing values'))
   expect_that(wn_cmd('w', c('x')), throws_error('should be one of'))
+})
+
+test_that('Supported search types', {
   # TODO: iterate all possibile search values and test call result
 })
 
