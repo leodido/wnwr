@@ -1,6 +1,6 @@
 context('Shell command syntax')
 
-test_that("Errors covering 'word' argument", {
+test_that("Errors related to the 'word' argument", {
   expect_that(wn_cmd(), throws_error('is missing'))
   expect_that(wn_cmd(c()), throws_error('not a string'))
   expect_that(wn_cmd(c('x', 'y')), throws_error('not a string'))
@@ -13,7 +13,7 @@ test_that("Errors covering 'word' argument", {
   expect_that(wn_cmd(''), throws_error('empty string'))
 })
 
-test_that("Errors covering 'search' argument", {
+test_that("Errors related to the 'search' argument", {
   expect_that(wn_cmd('word'), throws_error('is missing'))
   expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NA_integer_), throws_error('not a character vector'))
@@ -60,7 +60,7 @@ test_that('Supported search types', {
   test_search_arg(rep(search_type[3], 3))
 })
 
-test_that("Errors covering 'opt' argument", {
+test_that("errors related to the 'opt' argument", {
   expect_that(wn_cmd('word', search_type[1], NA), throws_error('must be NULL or a character vector'))
   expect_that(wn_cmd('word', search_type[1], 1L), throws_error('must be NULL or a character vector'))
   expect_that(wn_cmd('word', search_type[1], 'x'), throws_error('should be one of'))
@@ -69,7 +69,7 @@ test_that("Errors covering 'opt' argument", {
   expect_that(wn_cmd('word', search_type[1], c('x', 'y')), throws_error('must be of length 1'))
 })
 
-test_that("Supported search options", {
+test_that("supported search options", {
   expect_equal(wn_cmd('word', search_type[1]), paste0(wn_command, " 'word' -", search_type[1]))
   expect_equal(wn_cmd('word', search_type[1], NULL), paste0(wn_command, " 'word' -", search_type[1]))
   # all supported options
@@ -79,7 +79,7 @@ test_that("Supported search options", {
   ))
 })
 
-test_that("Errors covering 'sense_num' argument", {
+test_that("errors related to the 'sense_num' argument", {
   expect_that(wn_cmd('word', search_type[1], search_opts[1], letters[1:5L]), throws_error('not a count'))
   expect_that(wn_cmd('word', search_type[1], search_opts[1], 'abc'), throws_error('not a count'))
   expect_that(wn_cmd('word', search_type[1], search_opts[1], NA), throws_error('not a count'))
@@ -87,7 +87,7 @@ test_that("Errors covering 'sense_num' argument", {
   expect_that(wn_cmd('word', search_type[1], search_opts[1], NA_integer_), throws_error('missing value'))
 })
 
-test_that("Sense number filter", {
+test_that("sense number filter", {
   expect_equal(wn_cmd('word', search_type[1]), paste0(wn_command, " 'word' -", search_type[1]))
   expect_equal(wn_cmd('word', search_type[1], search_opts[1]), paste0(wn_command, " 'word' -", search_opts[1], " -", search_type[1]))
   expect_equal(wn_cmd('word', search_type[1], search_opts[1], NULL), paste0(wn_command, " 'word' -", search_opts[1], " -", search_type[1]))
@@ -95,4 +95,14 @@ test_that("Sense number filter", {
   expect_equal(wn_cmd('word', search_type[1], sense_num = 10L), paste0(wn_command, " 'word' -n", 10L, " -", search_type[1]))
   expect_equal(wn_cmd('word', search_type[1], sense_num = 1), paste0(wn_command, " 'word' -n", 1, " -", search_type[1]))
   expect_equal(wn_cmd('word', search_type[1], search_opts[1], c(1)), paste0(wn_command, " 'word' -", search_opts[1], " -n", 1, " -", search_type[1]))
+})
+
+test_that("parameters ignored in word information mode", {
+  expect_equal(wn_cmd('word', info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type[1], info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type, info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type[1], letters[1:20], info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], 2L, info = TRUE), paste0(wn_command, " 'word'"))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], 1:2L, info = TRUE), paste0(wn_command, " 'word'"))
 })
