@@ -16,22 +16,52 @@ test_that("Errors covering 'word' argument", {
 test_that("Errors covering 'search' argument", {
   expect_that(wn_cmd('word'), throws_error('is missing'))
   expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
+  expect_that(wn_cmd('word', c()), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NULL), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NA), throws_error('not a character vector'))
   expect_that(wn_cmd('word', NA_character_), throws_error('contains empty or missing values'))
-  expect_that(wn_cmd('word', ''), throws_error('search contains empty or missing values'))
-  expect_that(wn_cmd('w', c('')), throws_error('search contains empty or missing values'))
+  expect_that(wn_cmd('word', ''), throws_error('contains empty or missing values'))
+  expect_that(wn_cmd('w', c('')), throws_error('contains empty or missing values'))
   expect_that(wn_cmd('w', c('x')), throws_error('should be one of'))
 })
 
+test_search_arg <- function(x) {
+  expect_equal(
+    wn_cmd('word', x),
+    paste0("wn 'word' ", substring(paste(' -', x, collapse = '', sep = ''), 2))
+  )
+}
+
 test_that('Supported search types', {
-  # TODO: iterate all possibile search values and test call result
+#   # all possible combinantions
+#   invisible(lapply(seq_len(length(search_type)), function(m) {
+#     invisible(combn(
+#       search_type,
+#       m,
+#       test_search_arg,
+#       simplify = FALSE
+#     ))
+#   }))
+  # one command, one search type
+  invisible(combn(
+    search_type,
+    1,
+    test_search_arg,
+    simplify = FALSE
+  ))
+  # one command, all search types
+  invisible(combn(
+    search_type,
+    length(search_type),
+    test_search_arg,
+    simplify = FALSE
+  ))
 })
 
-test_that('Function \'opts\' parameter', {
-  
-})
-
-test_that('Function \'sense_num\' parameter', {
-  
-})
+# test_that('Function \'opts\' parameter', {
+#   
+# })
+# 
+# test_that('Function \'sense_num\' parameter', {
+#   
+# })
