@@ -28,7 +28,7 @@ test_that("Errors covering 'search' argument", {
 test_search_arg <- function(x) {
   expect_equal(
     wn_cmd('word', x),
-    paste0(wn_command, " 'word' ", substring(paste(' -', x, collapse = '', sep = ''), 2))
+    paste0(wn_command, " 'word' ", substring(paste(' -', unique(x), collapse = '', sep = ''), 2))
   )
 }
 
@@ -56,6 +56,8 @@ test_that('Supported search types', {
     test_search_arg,
     simplify = FALSE
   ))
+  # duplicates removed
+  test_search_arg(rep(search_type[3], 3))
 })
 
 test_that("Errors covering 'opt' argument", {

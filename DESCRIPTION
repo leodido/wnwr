@@ -1,6 +1,6 @@
 Package: wnwr
 Title: A WordNet wrapper.
-Version: 0.1
+Version: 0.2
 Author: Leonardo Di Donato <leodidonato@gmail.com>
 Maintainer: Leonardo Di Donato <leodidonato@gmail.com>
 Description: A R wrapper for the WordNet command (i.e., wn).
