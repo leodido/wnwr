@@ -11,23 +11,24 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL) {
   opt <- match.arg(opt, getOption('wnwr.supported.search.opts'))
   
   if (initDict()) {
-    cmd <- paste('wn', shQuote(word))
+    cmd <- paste(getOption('wnwr.wn.command'), shQuote(word))
     if (identical(current_opt, opt)) cmd <- paste(cmd, opt, sep = ' -')
     if (!is.null(sense_num)) {
       assert_that(is.count(sense_num))
       cmd <- paste(cmd, sense_num, sep = ' -n')
     }
     return(paste(cmd, substring(paste(' -', search, collapse = '', sep = ''), 2)))
-    # output <- suppressWarnings(tryCatch(system(cmd, intern = TRUE), error = I))
-    # if (length(output) > 0) {
-      # TODO: process output
-      # attrs <- attributes(output)
-      # found_senses <- attrs$status    
-      # return(list(res = paste(output, collpase = ''), found_senses = found_senses))
-    # } else {
-    #   return(NULL)
-    # }
   } else {
     stop('wordnet not found.')
   }
 }
+
+# output <- suppressWarnings(tryCatch(system(cmd, intern = TRUE), error = I))
+# if (length(output) > 0) {
+# TODO: process output
+# attrs <- attributes(output)
+# found_senses <- attrs$status    
+# return(list(res = paste(output, collpase = ''), found_senses = found_senses))
+# } else {
+#   return(NULL)
+# }

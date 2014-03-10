@@ -28,7 +28,7 @@ test_that("Errors covering 'search' argument", {
 test_search_arg <- function(x) {
   expect_equal(
     wn_cmd('word', x),
-    paste0("wn 'word' ", substring(paste(' -', x, collapse = '', sep = ''), 2))
+    paste0(wn_command, " 'word' ", substring(paste(' -', x, collapse = '', sep = ''), 2))
   )
 }
 
@@ -68,12 +68,12 @@ test_that("Errors covering 'opt' argument", {
 })
 
 test_that("Supported search options", {
-  expect_equal(wn_cmd('word', search_type[1]), paste0("wn 'word' -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], NULL), paste0("wn 'word' -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1]), paste0(wn_command, " 'word' -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], NULL), paste0(wn_command, " 'word' -", search_type[1]))
   # all supported options
   invisible(lapply(
     search_opts,
-    function(o) expect_equal(wn_cmd('word', search_type[1], o), paste0("wn 'word' -", o, " -", search_type[1]))
+    function(o) expect_equal(wn_cmd('word', search_type[1], o), paste0(wn_command, " 'word' -", o, " -", search_type[1]))
   ))
 })
 
@@ -86,11 +86,11 @@ test_that("Errors covering 'sense_num' argument", {
 })
 
 test_that("Sense number filter", {
-  expect_equal(wn_cmd('word', search_type[1]), paste0("wn 'word' -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], search_opts[1]), paste0("wn 'word' -", search_opts[1], " -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], search_opts[1], NULL), paste0("wn 'word' -", search_opts[1], " -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], search_opts[1], c()), paste0("wn 'word' -", search_opts[1], " -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], sense_num = 10L), paste0("wn 'word' -n", 10L, " -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], sense_num = 1), paste0("wn 'word' -n", 1, " -", search_type[1]))
-  expect_equal(wn_cmd('word', search_type[1], search_opts[1], c(1)), paste0("wn 'word' -", search_opts[1], " -n", 1, " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1]), paste0(wn_command, " 'word' -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1]), paste0(wn_command, " 'word' -", search_opts[1], " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], NULL), paste0(wn_command, " 'word' -", search_opts[1], " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], c()), paste0(wn_command, " 'word' -", search_opts[1], " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], sense_num = 10L), paste0(wn_command, " 'word' -n", 10L, " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], sense_num = 1), paste0(wn_command, " 'word' -n", 1, " -", search_type[1]))
+  expect_equal(wn_cmd('word', search_type[1], search_opts[1], c(1)), paste0(wn_command, " 'word' -", search_opts[1], " -n", 1, " -", search_type[1]))
 })
