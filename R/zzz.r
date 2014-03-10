@@ -16,9 +16,9 @@ NULL
 search_type <- c(
   'antsn', 'antsv', 'antsa', 'antsr',   # antonyms
   'hypen', 'hypev',                     # hypernyms
-  'hypon', 'hypov', 'treen', 'treev',   # hyponyms & hyponym tree
+  'treen', 'treev',                     # hyponym tree
   'entav',    	                        # verb entailment
-  'synsn', 'sysnv', 'sysna', 'sysnr',		# synonyms (ordered by estimated frequency)
+  'synsn', 'synsv', 'synsa', 'synsr',		# synonyms (ordered by estimated frequency)
   'smemn',            			            # member of holonyms
   'ssubn',			                        # substance of holonyms
   'sprtn',			                        # part of holonyms
@@ -44,7 +44,7 @@ search_type <- c(
 )
 search_opts <- c('h', 'g', 'l', 'a', 'o', 's')
 wn_command <- 'wn'
-synset_types <- c('noun', 'verb', 'adjective', 'adverb')
+synset_types <- c('noun', 'verb', 'adj', 'adv')
 
 .onLoad <- function(libname, pkgname) {
   ops <- options()
