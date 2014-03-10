@@ -1,14 +1,14 @@
-#' wnr provides ...
+#' wnwr provides ...
 #'
 #' @section Package options:
 #'
 #' It uses the following \code{options} to configure behaviour:
 #' \itemize{
-#'   \item \code{wnr.supported.search.types}: vector of supported search types
-#'   \item \code{wnr.supported.search.opts}: vector of supported search options
+#'   \item \code{wnwr.supported.search.types}: vector of supported search types
+#'   \item \code{wnwr.supported.search.opts}: vector of supported search options
 #' }
 #' @docType package
-#' @name wnr
+#' @name wnwr
 NULL
 
 search_type <- c(
@@ -45,11 +45,11 @@ search_opts <- c('h', 'g', 'l', 'a', 'o', 's')
 
 .onLoad <- function(libname, pkgname) {
   ops <- options()
-  wnr_opts <- list(
-    wnr.supported.search.types = search_type,
-    wnr.supported.search.opts = search_opts
+  wnwr_opts <- list(
+    wnwr.supported.search.types = search_type,
+    wnwr.supported.search.opts = search_opts
   )
-  to_set <- !(names(wnr_opts) %in% names(ops))
-  if (any(to_set)) options(wnr_opts[to_set])
+  to_set <- !(names(wnwr_opts) %in% names(ops))
+  if (any(to_set)) options(wnwr_opts[to_set])
   invisible()
 }

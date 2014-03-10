@@ -33,7 +33,7 @@ test_search_arg <- function(x) {
 }
 
 test_that('Supported search types', {
-#   # all possible combinantions
+#   # all possible combinations
 #   invisible(lapply(seq_len(length(search_type)), function(m) {
 #     invisible(combn(
 #       search_type,
