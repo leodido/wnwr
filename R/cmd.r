@@ -12,7 +12,7 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL, info = FALSE) {
     current_opt <- as.list(environment())$opt
     opt <- match.arg(opt, getOption('wnwr.supported.search.opts'))
   }
-  
+  # construct wn command
   if (initDict()) {
     cmd <- paste(getOption('wnwr.wn.command'), shQuote(word))
     if (info) return(structure(cmd, class = c('wn', 'command')))
@@ -28,4 +28,4 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL, info = FALSE) {
 }
 
 #' @export
-print.command <- function(x, ...) cat(x)
+print.command <- function(x, ...) cat(x, '\n', sep = '')

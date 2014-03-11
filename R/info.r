@@ -42,7 +42,7 @@ process_info <- function(info) {
 #' @export
 word_info <- function(word) {
   out <- exec(word_info_cmd(word))
-  return(process_info(out$res))
+  return(process_info(out$result))
 }
 
 # TODO
