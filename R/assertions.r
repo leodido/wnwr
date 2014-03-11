@@ -29,7 +29,7 @@ on_failure(has_class) <- function(call, env) {
   paste0(deparse(call$x), " does not have class '", eval(call$which, env), "'.")
 }
 
-is_command <- function(x) has_class(x, 'wn') && has_class(x, 'command')
+is_command <- function(x) is.string(x) && has_class(x, 'wn') && has_class(x, 'command')
 on_failure(is_command) <- function(call, env) {
   paste0(deparse(call$x), " is not a wn command.")
 }

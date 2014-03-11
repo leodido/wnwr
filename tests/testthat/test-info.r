@@ -45,5 +45,5 @@ test_that("errors related to the 'word' argument", {
 })
 
 test_that('word information command syntax', {
-  expect_equal(word_info_cmd('word'), paste0(wn_command, " 'word'"))
+  expect_equal(word_info_cmd('word'), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
 })

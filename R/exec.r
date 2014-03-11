@@ -1,5 +1,5 @@
 exec <- function(cmd) {
-  assert_that(is.string(cmd))
+  assert_that(is_command(cmd))
   output <- suppressWarnings(tryCatch(system(cmd, intern = TRUE), error = I))
   if (length(output) > 0) {
     attrs <- attributes(output)
