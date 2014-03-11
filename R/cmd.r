@@ -15,14 +15,17 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL, info = FALSE) {
   
   if (initDict()) {
     cmd <- paste(getOption('wnwr.wn.command'), shQuote(word))
-    if (info) return(cmd)
+    if (info) return(structure(cmd, class = c('wn', 'command')))
     if (identical(current_opt, opt)) cmd <- paste(cmd, opt, sep = ' -')
     if (!is.null(sense_num)) {
       assert_that(is.count(sense_num))
       cmd <- paste(cmd, sense_num, sep = ' -n')
     }
-    return(paste(cmd, substring(paste(' -', search, collapse = '', sep = ''), 2)))
+    return(structure(paste(cmd, substring(paste(' -', search, collapse = '', sep = ''), 2)), class = c('wn', 'command')))
   } else {
     stop('wordnet not found.')
   }
 }
+
+#' @export
+print.command <- function(x, ...) cat(x)

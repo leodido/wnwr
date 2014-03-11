@@ -23,3 +23,13 @@ not_string <- function(x) !is.string(x)
 on_failure(not_string) <- function(call, env) {
   paste0(deparse(call$x), ' is a string.')
 }
+
+has_class <- function(x, which) has_attr(x, 'class') && which %in% attr(x, 'class', exact = TRUE)
+on_failure(has_class) <- function(call, env) {
+  paste0(deparse(call$x), " does not have class '", eval(call$which, env), "'.")
+}
+
+is_command <- function(x) has_class(x, 'wn') && has_class(x, 'command')
+on_failure(is_command) <- function(call, env) {
+  paste0(deparse(call$x), " is not a wn command.")
+}
