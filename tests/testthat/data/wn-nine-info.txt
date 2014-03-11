@@ -1,0 +1,35 @@
+Information available for noun nine
+-hypen		Hypernyms
+
+-synsn		Synonyms (ordered by estimated frequency)
+
+-smemn		Member of Holonyms
+
+-holon		All Holonyms
+
+-famln		Familiarity & Polysemy Count
+
+-coorn		Coordinate Terms (sisters)
+
+-hmern		Hierarchical Meronyms
+
+-grepn		List of Compound Words
+
+-over		Overview of Senses
+
+
+No information available for verb nine
+
+Information available for adj nine
+-antsa		Antonyms
+
+-synsa		Synonyms (ordered by estimated frequency)
+
+-famla		Familiarity & Polysemy Count
+
+-grepa		List of Compound Words
+
+-over		Overview of Senses
+
+
+No information available for adv nine
