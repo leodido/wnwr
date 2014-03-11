@@ -1,0 +1,21 @@
+Information available for noun ciao
+-hypen		Hypernyms
+
+-synsn		Synonyms (ordered by estimated frequency)
+
+-domnn		Domain
+
+-famln		Familiarity & Polysemy Count
+
+-coorn		Coordinate Terms (sisters)
+
+-grepn		List of Compound Words
+
+-over		Overview of Senses
+
+
+No information available for verb ciao
+
+No information available for adj ciao
+
+No information available for adv ciao
