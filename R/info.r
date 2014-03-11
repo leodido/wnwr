@@ -32,6 +32,7 @@ get_info_res <- function(output) {
   res <- lapply(Filter(Negate(is.null), output), function(i) {
     sub(paste0('.*(', paste(types, collapse = '|'), ').*'), '\\1', i)
   })
+  # return
   if (length(res) > 0) return(res)
   else return(NULL)
 }

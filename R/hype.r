@@ -1,3 +1,0 @@
-hypernyms <- function() {
-  
-}
