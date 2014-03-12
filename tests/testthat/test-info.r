@@ -1,5 +1,8 @@
 context('Word informations')
 
+synset_types <- unlist(unname(synset_type))
+search_types <- unlist(flatten(search_type))
+
 test_that("errors related to the 'info' argument", {
   expect_that(process_info(), throws_error('arg is missing'))
   expect_that(process_info(NA), throws_error('not a character vector'))
@@ -19,12 +22,12 @@ test_that("information extraction", {
   )
   # some common cases
   expect_equal(
-    process_info(c(synset_types[1], search_type[1], synset_types[2], search_type[2], synset_types[3], search_type[3], synset_types[4], search_type[4])),
-    structure(list(search_type[1], search_type[2], search_type[3], search_type[4]), .Names = synset_types)
+    process_info(c(synset_types[1], search_types[1], synset_types[2], search_types[2], synset_types[3], search_types[3], synset_types[4], search_types[4])),
+    structure(list(search_types[1], search_types[2], search_types[3], search_types[4]), .Names = synset_types)
   )
   expect_equal(
-    process_info(c(synset_types[1], search_type[10], synset_types[4], search_type[1:9], synset_types[3], search_type[11], synset_types[2])),
-    structure(list(search_type[10], NULL, search_type[11], search_type[1:9]), .Names = synset_types)
+    process_info(c(synset_types[1], search_types[10], synset_types[4], search_types[1:9], synset_types[3], search_types[11], synset_types[2])),
+    structure(list(search_types[10], NULL, search_types[11], search_types[1:9]), .Names = synset_types)
   )
   # some real cases
   output <- file.path('data', list.files('data', pattern = '-info.txt$'))
@@ -38,10 +41,10 @@ test_that("information extraction", {
 })
 
 test_that("errors related to the 'word' argument", {
-  expect_that(word_info(), throws_error('arg is missing'))
-  expect_that(word_info(''), throws_error('an empty string'))
-  expect_that(word_info(NULL), throws_error('not a string'))
-  expect_that(word_info(NA), throws_error('not a string'))
+  expect_that(info(), throws_error('arg is missing'))
+  expect_that(info(''), throws_error('an empty string'))
+  expect_that(info(NULL), throws_error('not a string'))
+  expect_that(info(NA), throws_error('not a string'))
 })
 
 test_that('word information command syntax', {

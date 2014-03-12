@@ -1,6 +1,6 @@
 # wnwr
 
-WordNet wrapper contains a set of R functions that wraps WordNet searches.
+WordNet wrapper  contains a set of R functions that wraps WordNet searches.
 
 ## Why ?
 

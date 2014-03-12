@@ -7,7 +7,7 @@ wn_cmd <- function(word, search, opt = NULL, sense_num = NULL, info = FALSE) {
     # check search arg
     if (missing(search)) stop(missing_message(search))
     assert_that(not_empty_character_vector(search))
-    search <- match.arg(unique(search), getOption('wnwr.supported.search.types'), several.ok = TRUE)
+    search <- match.arg(unique(search), unlist(flatten(getOption('wnwr.supported.search.types'))), several.ok = TRUE)
     # check opt arg
     current_opt <- as.list(environment())$opt
     opt <- match.arg(opt, getOption('wnwr.supported.search.opts'))

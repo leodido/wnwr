@@ -1,2 +1,2 @@
 library(testthat)
-test_check('wnr')
+test_check('wnwr')

@@ -13,45 +13,66 @@
 #' @name wnwr
 NULL
 
-search_type <- c(
-  'antsn', 'antsv', 'antsa', 'antsr',   # antonyms
-  'hypen', 'hypev',                     # hypernyms
-  'treen', 'treev',                     # hyponym tree
-  'entav',    	                        # verb entailment
-  'synsn', 'synsv', 'synsa', 'synsr',		# synonyms (ordered by estimated frequency)
-  'smemn',            			            # member of holonyms
-  'ssubn',			                        # substance of holonyms
-  'sprtn',			                        # part of holonyms
-  'membn',			                        # has member meronyms
-  'subsn',			                        # has substance meronyms
-  'partn',			                        # has part meronyms
-  'meron',		                        	# all meronyms
-  'holon',			                        # all holonyms
-  'causv',			                        # cause to
-  'perta', 'pertar',		                # pertainyms
-  'attrn', 'attrna',      		          # attributes
-  'derin', 'deriv',	                    # derived forms
-  'domnn', 'domnv' , 'domna', 'domnr',	# domain
-  'domtn', 'domtv', 'domta', 'domtr',	  # domain terms
-  'famln', 'famlv', 'famla', 'famlr',   # familiarity & polysemy count
-  'framv',			                        # verb frames
-  'coorn', 'coorv',	                    # coordinate terms (sisters)
-  'simsv',			                        # synonyms (grouped by similarity of meaning)
-  'hmern',			                        # hierarchical meronyms
-  'hholn',		                          # hierarchical holonyms
-  'grepn', 'grepv', 'grepa' ,'grepr',	  # list of compound words
-  'over'                                # overview of senses
+# search_type <- c(
+#   'antsn', 'antsv', 'antsa', 'antsr',   # antonyms
+#   'hypen', 'hypev',                     # hypernyms
+#   'treen', 'treev',                     # hyponym tree
+#   'entav',    	                        # verb entailment
+#   'synsn', 'synsv', 'synsa', 'synsr',		# synonyms (ordered by estimated frequency)
+#   'smemn',            			            # member of holonyms
+#   'ssubn',			                        # substance of holonyms
+#   'sprtn',			                        # part of holonyms
+#   'membn',			                        # has member meronyms
+#   'subsn',			                        # has substance meronyms
+#   'partn',			                        # has part meronyms
+#   'meron',		                        	# all meronyms
+#   'holon',			                        # all holonyms
+#   'causv',			                        # cause to
+#   'perta', 'pertar',		                # pertainyms
+#   'attrn', 'attrna',      		          # attributes
+#   'derin', 'deriv',	                    # derived forms
+#   'domnn', 'domnv' , 'domna', 'domnr',	# domain
+#   'domtn', 'domtv', 'domta', 'domtr',	  # domain terms
+#   'famln', 'famlv', 'famla', 'famlr',   # familiarity & polysemy count
+#   'framv',			                        # verb frames
+#   'coorn', 'coorv',	                    # coordinate terms (sisters)
+#   'simsv',			                        # synonyms (grouped by similarity of meaning)
+#   'hmern',			                        # hierarchical meronyms
+#   'hholn',		                          # hierarchical holonyms
+#   'grepn', 'grepv', 'grepa' ,'grepr',	  # list of compound words
+#   'over'                                # overview of senses
+# )
+search_type <- list(
+  antonyms        = c('antsn', 'antsv', 'antsa', 'antsr'),
+  hypernyms       = c('hypen', 'hypev'),                     
+  hyponyms        = c('treen', 'treev'), # tree
+  verb_entailment = c('entav'), 
+  synonyms        = c('synsn', 'synsv', 'synsa', 'synsr'), # ordered by estimated frequency
+  holonyms        = c('hholn'), # hierarchical holonyms # c('holon', 'smemn', 'ssubn', 'sprtn') => all holonyms, member, substance, part of holonyms
+  meronyms        = c('hmern'), # hierarchical meronyms # c('meron', membn', 'subsn', 'partn') => all meronyms, has member meronyms, has substance meronyms, has part meronyms
+	cause_to        = c('causv'), 
+  pertainyms      = c('perta', 'pertar'),	
+  attributes      = c('attrn', 'attrna'),  
+  derived_forms   = c('derin', 'deriv'),
+  domain          = c('domnn', 'domnv' , 'domna', 'domnr'),
+  domain_terms    = c('domtn', 'domtv', 'domta', 'domtr'),
+  polysemy_count  = c('famln', 'famlv', 'famla', 'famlr'), # familiarity
+  verb_frames     = c('framv'),	 
+  sisters         = c('coorn', 'coorv'), # coordinate terms
+  synonym_groups  = c('simsv'), # grouped by similarity of meaning
+  compound_words  = c('grepn', 'grepv', 'grepa' ,'grepr'),
+  sense_overview  = c('over')
 )
 search_opts <- c('h', 'g', 'l', 'a', 'o', 's')
+synset_type <- list(n = 'noun', v = 'verb', a = 'adj', r = 'adv')
 wn_command <- 'wn'
-synset_types <- c('noun', 'verb', 'adj', 'adv')
 
 .onLoad <- function(libname, pkgname) {
   ops <- options()
   wnwr_opts <- list(
     wnwr.supported.search.types = search_type,
     wnwr.supported.search.opts = search_opts,
-    wnwr.supported.synset.types = synset_types,
+    wnwr.supported.synset.types = synset_type,
     wnwr.wn.command = wn_command
   )
   to_set <- !(names(wnwr_opts) %in% names(ops))

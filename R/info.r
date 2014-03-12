@@ -10,7 +10,7 @@ process_info <- function(info) {
   info <- gsub('\\s+', '', info)
   info <- info[info != '']
   # retrieve supported synset types
-  synsets <- getOption('wnwr.supported.synset.types')
+  synsets <- unlist(getOption('wnwr.supported.synset.types'))
   # retrieve supported search types
   types <- getOption('wnwr.supported.search.types')
   # identify and index synset
@@ -40,7 +40,7 @@ process_info <- function(info) {
 }
 
 #' @export
-word_info <- function(word) {
+info <- function(word) {
   out <- exec(word_info_cmd(word))
   return(process_info(out$result))
 }
@@ -48,6 +48,6 @@ word_info <- function(word) {
 # TODO
 # #' @export
 # can_search <- function(word, search, synset = NULL) {
-#   info <- word_info(word)
+#   info <- info(word)
 #   
 # }
