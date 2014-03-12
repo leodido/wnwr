@@ -76,35 +76,35 @@ test_that("supported search options", {
   expect_equal(wn_cmd('word', search_types[1], NULL), structure(paste0(wn_command, " 'word' -", search_types[1]), class = c('wn', 'command')))
   # all supported options
   invisible(lapply(
-    search_opts,
+    search_opt,
     function(o) expect_equal(wn_cmd('word', search_types[1], o), structure(paste0(wn_command, " 'word' -", o, " -", search_types[1]), class = c('wn', 'command')))
   ))
 })
 
 test_that("errors related to the 'sense_num' argument", {
-  expect_that(wn_cmd('word', search_types[1], search_opts[1], letters[1:5L]), throws_error('not a count'))
-  expect_that(wn_cmd('word', search_types[1], search_opts[1], 'abc'), throws_error('not a count'))
-  expect_that(wn_cmd('word', search_types[1], search_opts[1], NA), throws_error('not a count'))
-  expect_that(wn_cmd('word', search_types[1], search_opts[1], 1:10L), throws_error('not a count'))
-  expect_that(wn_cmd('word', search_types[1], search_opts[1], NA_integer_), throws_error('missing value'))
+  expect_that(wn_cmd('word', search_types[1], search_opt[1], letters[1:5L]), throws_error('not a count'))
+  expect_that(wn_cmd('word', search_types[1], search_opt[1], 'abc'), throws_error('not a count'))
+  expect_that(wn_cmd('word', search_types[1], search_opt[1], NA), throws_error('not a count'))
+  expect_that(wn_cmd('word', search_types[1], search_opt[1], 1:10L), throws_error('not a count'))
+  expect_that(wn_cmd('word', search_types[1], search_opt[1], NA_integer_), throws_error('missing value'))
 })
 
 test_that("sense number filter", {
   expect_equal(wn_cmd('word', search_types[1]), structure(paste0(wn_command, " 'word' -", search_types[1]), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1]), structure(paste0(wn_command, " 'word' -", search_opts[1], " -", search_types[1]), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], NULL), structure(paste0(wn_command, " 'word' -", search_opts[1], " -", search_types[1]), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], c()), structure(paste0(wn_command, " 'word' -", search_opts[1], " -", search_types[1]), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1]), structure(paste0(wn_command, " 'word' -", search_opt[1], " -", search_types[1]), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], NULL), structure(paste0(wn_command, " 'word' -", search_opt[1], " -", search_types[1]), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], c()), structure(paste0(wn_command, " 'word' -", search_opt[1], " -", search_types[1]), class = c('wn', 'command')))
   expect_equal(wn_cmd('word', search_types[1], sense_num = 10L), structure(paste0(wn_command, " 'word' -n", 10L, " -", search_types[1]), class = c('wn', 'command')))
   expect_equal(wn_cmd('word', search_types[1], sense_num = 1), structure(paste0(wn_command, " 'word' -n", 1, " -", search_types[1]), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], c(1)), structure(paste0(wn_command, " 'word' -", search_opts[1], " -n", 1, " -", search_types[1]), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], c(1)), structure(paste0(wn_command, " 'word' -", search_opt[1], " -n", 1, " -", search_types[1]), class = c('wn', 'command')))
 })
 
 test_that("parameters ignored in word information mode", {
   expect_equal(wn_cmd('word', info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
   expect_equal(wn_cmd('word', search_types[1], info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
   expect_equal(wn_cmd('word', search_types, info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
   expect_equal(wn_cmd('word', search_types[1], letters[1:20], info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], 2L, info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
-  expect_equal(wn_cmd('word', search_types[1], search_opts[1], 1:2L, info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], 2L, info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
+  expect_equal(wn_cmd('word', search_types[1], search_opt[1], 1:2L, info = TRUE), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
 })

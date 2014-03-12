@@ -13,35 +13,6 @@
 #' @name wnwr
 NULL
 
-# search_type <- c(
-#   'antsn', 'antsv', 'antsa', 'antsr',   # antonyms
-#   'hypen', 'hypev',                     # hypernyms
-#   'treen', 'treev',                     # hyponym tree
-#   'entav',    	                        # verb entailment
-#   'synsn', 'synsv', 'synsa', 'synsr',		# synonyms (ordered by estimated frequency)
-#   'smemn',            			            # member of holonyms
-#   'ssubn',			                        # substance of holonyms
-#   'sprtn',			                        # part of holonyms
-#   'membn',			                        # has member meronyms
-#   'subsn',			                        # has substance meronyms
-#   'partn',			                        # has part meronyms
-#   'meron',		                        	# all meronyms
-#   'holon',			                        # all holonyms
-#   'causv',			                        # cause to
-#   'perta', 'pertar',		                # pertainyms
-#   'attrn', 'attrna',      		          # attributes
-#   'derin', 'deriv',	                    # derived forms
-#   'domnn', 'domnv' , 'domna', 'domnr',	# domain
-#   'domtn', 'domtv', 'domta', 'domtr',	  # domain terms
-#   'famln', 'famlv', 'famla', 'famlr',   # familiarity & polysemy count
-#   'framv',			                        # verb frames
-#   'coorn', 'coorv',	                    # coordinate terms (sisters)
-#   'simsv',			                        # synonyms (grouped by similarity of meaning)
-#   'hmern',			                        # hierarchical meronyms
-#   'hholn',		                          # hierarchical holonyms
-#   'grepn', 'grepv', 'grepa' ,'grepr',	  # list of compound words
-#   'over'                                # overview of senses
-# )
 search_type <- list(
   antonyms        = c('antsn', 'antsv', 'antsa', 'antsr'),
   hypernyms       = c('hypen', 'hypev'),                     
@@ -63,7 +34,7 @@ search_type <- list(
   compound_words  = c('grepn', 'grepv', 'grepa' ,'grepr'),
   sense_overview  = c('over')
 )
-search_opts <- c('h', 'g', 'l', 'a', 'o', 's')
+search_opt <- c('h', 'g', 'l', 'a', 'o', 's')
 synset_type <- list(n = 'noun', v = 'verb', a = 'adj', r = 'adv')
 wn_command <- 'wn'
 
@@ -71,7 +42,7 @@ wn_command <- 'wn'
   ops <- options()
   wnwr_opts <- list(
     wnwr.supported.search.types = search_type,
-    wnwr.supported.search.opts = search_opts,
+    wnwr.supported.search.opts = search_opt,
     wnwr.supported.synset.types = synset_type,
     wnwr.wn.command = wn_command
   )
