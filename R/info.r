@@ -7,15 +7,16 @@ process_info <- function(info) {
   if (is.null(info)) return(info)
   assert_that(not_string(info), is.character(info))
   # remove empty string elements
-  info <- gsub('\\s+', '', info)
+  info <- gsub('^\\s+$', '', info)
   info <- info[info != '']
   # retrieve supported synset types
-  synsets <- unlist(getOption('wnwr.supported.synset.types'))
+  synsets <- unlist(unname(getOption('wnwr.supported.synset.types')))
   # retrieve supported search types
-  types <- getOption('wnwr.supported.search.types')
+  types <- unlist(flatten(getOption('wnwr.supported.search.types')))
   # identify and index synset
-  flags <- grepl(paste(synsets, collapse = '|'), info)
-  nms <- sub(paste0('.*?(', paste(synsets, collapse = '|'), ').*'), '\\1', info) # non greedy match
+  synset_regex <- paste(synsets, collapse = '|')
+  flags <- grepl(synset_regex, info)
+  nms <- sub(paste0('.*?(', synset_regex, ').*'), '\\1', info) # non greedy match
   assert_that(length(flags) == length(nms))
   nms <- nms[flags]
   index <- cumsum(flags)
@@ -34,7 +35,8 @@ process_info <- function(info) {
   if (length(Filter(is.null, info)) == length(synsets)) return(info)
   # matching search types only in children with information (not null children)
   results <- lapply(Filter(Negate(is.null), info), function(i) {
-    sub(paste0('.*(', paste(types, collapse = '|'), ').*'), '\\1', i)
+    i <- sub(paste0('.*(', paste(types, collapse = '|'), ').*'), '\\1', i)
+    i[i %in% types]
   })
   return(c(results, Filter(is.null, info))[synsets])
 }
