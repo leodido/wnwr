@@ -1,23 +1,43 @@
 # wnwr
 
-WordNet wrapper  contains a set of R functions that wraps WordNet searches.
+A <b>w</b>ord<b>n</b>et <b>wr</b>apper.
+
+The current R package contains a set of functions to query the [wordnet](http://wordnet.princeton.edu) lexical database. It extent
 
 ## Why ?
 
-_TODO_
+...
 
 ## Installation
 
-_TODO_
+...
 
-## How to use it?
+## Usage
 
-_TODO_
+...
+
+### Word informations
+
+...
+
+* `info(word)`
+
+* `has(word, searchtype)`
+
+### Search word informations
+
+...
+
+* `search(word, searchtype, options, sense)`
+
+* `hypernyms(word, options, sense)`
+
+* `...`
 
 ## Requirements
 
 - R language (version >= 3.0)
-- WordNet instance locally installed
+- The wordnet software ([download](http://wordnet.princeton.edu/wordnet/download/current-version]))
 
 ## License
 
