@@ -55,6 +55,5 @@ has <- function(word, search, synset = NULL) {
     synset <- match.arg(synset, unlist(unname(getOption('wnwr.supported.synset.types'))), several.ok = TRUE)
     info <- info[synset]
   }
-  # TODO: search 'search' in list vector children, optionally filtering
-  lapply(info, function(x) search %in% x)#, logical(1)) 
+  return(lapply(info, function(x) search %in% x))
 }
