@@ -66,6 +66,20 @@ test_that("errors related to the 'word' argument", {
   expect_that(info(NA), throws_error('not a string'))
 })
 
-test_that('word information command syntax', {
+test_that("word information command syntax", {
   expect_equal(info_cmd('word'), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
 })
+
+# TODO
+# test_that("errors related to the 'synset' argument", {
+#   has('ciao', 'hypen', NULL)
+#     has('ciao', 'hypen', NA)
+#     has('ciao', 'hypen', c())
+#     has('ciao', 'hypen', list())
+#     has('ciao', 'hypen', c('')
+#     has('ciao', 'hypen', NA_character_)
+# })
+# 
+# test_that("has information", {
+#   
+# })

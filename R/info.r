@@ -47,9 +47,14 @@ info <- function(word) {
   return(extract_info(out))
 }
 
-# TODO
-# #' @export
-# has <- function(word, search, synset = NULL) {
-#   info <- info(word)
-#   
-# }
+#' @export
+has <- function(word, search, synset = NULL) {
+  info <- info(word)
+  if (!is.null(synset)) {
+    assert_that(not_empty_character_vector(synset))
+    synset <- match.arg(synset, unlist(unname(getOption('wnwr.supported.synset.types'))), several.ok = TRUE)
+    info <- info[synset]
+  }
+  # TODO: search 'search' in list vector children, optionally filtering
+  lapply(info, function(x) search %in% x)#, logical(1)) 
+}
