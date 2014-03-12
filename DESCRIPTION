@@ -10,7 +10,8 @@ BugReports: https://github.com/leodido/wnwr/issues
 Depends:
     R (>= 3.0.0),
     assertthat,
-    wordnet
+    wordnet,
+    stringr
 Imports:
     tools
 Suggests:
