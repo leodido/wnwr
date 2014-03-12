@@ -4,38 +4,57 @@ synset_types <- unlist(unname(synset_type))
 search_types <- unlist(flatten(search_type))
 
 test_that("errors related to the 'info' argument", {
-  expect_that(process_info(), throws_error('arg is missing'))
-  expect_that(process_info(NA), throws_error('not a character vector'))
-  expect_that(process_info(list()), throws_error('not a character vector'))
-  expect_that(process_info(c('')), throws_error('is a string'))
-  expect_that(process_info('single information'), throws_error('is a string'))
-  expect_that(process_info(NA_character_), throws_error('is a string'))
+  expect_that(extract_info(), throws_error('arg is missing'))
+  expect_that(extract_info(NA), throws_error('not a wn result'))
+  expect_that(extract_info(list()), throws_error('not a wn result'))
+  expect_that(extract_info(c('')), throws_error('not a wn result'))
+  expect_that(extract_info('single information'), throws_error('not a wn result'))
+  expect_that(extract_info(NA_character_), throws_error('not a wn result'))
 })
 
 test_that("information extraction", {
-  expect_null(process_info(NULL))
-  expect_null(process_info(c()))
+  expect_null(extract_info(NULL))
+  expect_null(extract_info(c()))
   # no information detected
   expect_equal(
-    process_info(synset_types),
+    extract_info(structure(list(synset_types, 1), .Names = c('result', 'num_senses'), class = c('wn', 'result'))),
     structure(vector('list', length(synset_types)), .Names = synset_types)
   )
   # some common cases
-  expect_equal(
-    process_info(c(synset_types[1], search_types[1], synset_types[2], search_types[2], synset_types[3], search_types[3], synset_types[4], search_types[4])),
-    structure(list(search_types[1], search_types[2], search_types[3], search_types[4]), .Names = synset_types)
+  obj_1 <- structure(
+    list(
+      c(synset_types[1], search_types[1], synset_types[2], search_types[2], synset_types[3], search_types[3], synset_types[4], search_types[4]),
+      1
+    ),
+    .Names = c('result', 'num_senses'),
+    class = c('wn', 'result')
   )
   expect_equal(
-    process_info(c(synset_types[1], search_types[10], synset_types[4], search_types[1:9], synset_types[3], search_types[11], synset_types[2])),
+    extract_info(obj_1),
+    structure(list(search_types[1], search_types[2], search_types[3], search_types[4]), .Names = synset_types)
+  )
+  obj_2 <- structure(
+    list(
+      c(synset_types[1], search_types[10], synset_types[4], search_types[1:9], synset_types[3], search_types[11], synset_types[2]),
+      1
+    ),
+    .Names = c('result', 'num_senses'),
+    class = c('wn', 'result')
+  )
+  expect_equal(
+    extract_info(obj_2),
     structure(list(search_types[10], NULL, search_types[11], search_types[1:9]), .Names = synset_types)
   )
   # some real cases
-  output <- file.path('data', list.files('data', pattern = '-info.txt$'))
-  wanted <- lapply(paste0(tools::file_path_sans_ext(output), '.rds'), readRDS)
-  invisible(sapply(seq_along(output), function(i) {
+  files <- file.path('data', list.files('data', pattern = '-info.rds$'))
+  matches <- regexpr('-([^-]+)-', files)
+  matches <- matches + 1
+  attr(matches, 'match.length') <- attr(matches, 'match.length') - 2
+  words <- regmatches(files, matches)
+  invisible(sapply(seq_along(files), function(i) {
     expect_equal(
-      process_info(readLines(output[[i]])),
-      wanted[[i]]
+      info(words[[i]]),
+      readRDS(files[[i]])
     )
   }))
 })
@@ -48,5 +67,5 @@ test_that("errors related to the 'word' argument", {
 })
 
 test_that('word information command syntax', {
-  expect_equal(word_info_cmd('word'), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
+  expect_equal(info_cmd('word'), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
 })

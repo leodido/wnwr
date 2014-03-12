@@ -1,3 +1,4 @@
 S3method(print,command)
 S3method(print,result)
-export(word_info)
+export(hypernyms)
+export(info)

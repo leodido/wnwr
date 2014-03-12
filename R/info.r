@@ -1,13 +1,13 @@
-word_info_cmd <- function(word) {
+info_cmd <- function(word) {
   wn_cmd(word, info = TRUE)
 }
 
-process_info <- function(info) {
+extract_info <- function(info) {
   if (missing(info)) stop(missing_message(info))
   if (is.null(info)) return(info)
-  assert_that(not_string(info), is.character(info))
+  assert_that(is_result(info))
   # remove empty string elements
-  info <- gsub('^\\s+$', '', info)
+  info <- gsub('^\\s+$', '', info$result)
   info <- info[info != '']
   # retrieve supported synset types
   synsets <- unlist(unname(getOption('wnwr.supported.synset.types')))
@@ -43,13 +43,13 @@ process_info <- function(info) {
 
 #' @export
 info <- function(word) {
-  out <- exec(word_info_cmd(word))
-  return(process_info(out$result))
+  out <- exec(info_cmd(word))
+  return(extract_info(out))
 }
 
 # TODO
 # #' @export
-# can_search <- function(word, search, synset = NULL) {
+# has <- function(word, search, synset = NULL) {
 #   info <- info(word)
 #   
 # }

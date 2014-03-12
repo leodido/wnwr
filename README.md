@@ -28,9 +28,9 @@ The current R package contains a set of functions to query the [wordnet](http://
 
 ...
 
-* `search(word, searchtype, options, sense)`
+* `search(word, searchtype, option, sense)`
 
-* `hypernyms(word, options, sense)`
+* `hypernyms(word, option, sense)`
 
 * `...`
 

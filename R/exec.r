@@ -14,4 +14,13 @@ exec <- function(cmd) {
 }
 
 #' @export
-print.result <- function(x, ...) cat('* Result:\n', paste(a$result[!grepl('^\\s+$', a$result)], collapse = '\n'), '\n* Number of senses:\n', x$num_senses, '\n', sep = '')
+print.result <- function(x, ...) {
+  cat(
+    '* Result:\n',
+    paste(x$result[!grepl('^\\s+$', x$result)], collapse = '\n'),
+    '\n* Number of senses:\n',
+    x$num_senses,
+    '\n',
+    sep = ''
+  )
+}
