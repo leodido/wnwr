@@ -7,21 +7,13 @@ extract_info <- function(info) {
   if (is.null(info)) return(info)
   assert_that(is_result(info))
   # remove empty string elements
-  info <- gsub('^\\s+$', '', info$result)
-  info <- info[info != '']
-  # retrieve supported synset types
-  synsets <- unlist(unname(getOption('wnwr.supported.synset.types')))
+  info <- delete_whit(info$result, '\\s*')
   # retrieve supported search types
   types <- unlist(flatten(getOption('wnwr.supported.search.types')))
+  # retrieve supported synset types
+  synsets <- unlist(unname(getOption('wnwr.supported.synset.types')))
   # identify and index synset
-  synset_regex <- paste(synsets, collapse = '|')
-  flags <- grepl(synset_regex, info)
-  nms <- sub(paste0('.*?(', synset_regex, ').*'), '\\1', info) # non greedy match
-  assert_that(length(flags) == length(nms))
-  nms <- nms[flags]
-  index <- cumsum(flags)
-  index <- flatten(tapply(index, index, function(i) setNames(i, rep(nms[i[1]], length(i))), simplify = FALSE))
-  assert_that(length(unique(index)) == length(synsets), !any(unlist(index)) == 0)
+  index <- identify_synsets(info)
   # subset by index as factor
   info <- setNames(
     lapply(split(info, unlist(index)), function(i) {
@@ -29,7 +21,7 @@ extract_info <- function(info) {
       if (length(i) > 0) i
       else NULL
     }),
-    nms
+    unique(names(index))
   )
   # no information detected for any synsets ?
   if (length(Filter(is.null, info)) == length(synsets)) return(info)
@@ -48,12 +40,15 @@ info <- function(word) {
 }
 
 #' @export
-has <- function(word, search, synset = NULL) {
+has <- function(word, search, synset = NULL, details = FALSE) {
+  assert_that(is.logical(details))
   info <- info(word)
   if (!is.null(synset)) {
     assert_that(not_empty_character_vector(synset))
     synset <- match.arg(synset, unlist(unname(getOption('wnwr.supported.synset.types'))), several.ok = TRUE)
     info <- info[synset]
   }
-  return(lapply(info, function(x) search %in% x))
+  result <- vapply(info, function(x) search %in% x, logical(1))
+  if (!details) return(any(result))
+  else return(result)
 }

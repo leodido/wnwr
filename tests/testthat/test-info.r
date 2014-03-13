@@ -70,16 +70,23 @@ test_that("word information command syntax", {
   expect_equal(info_cmd('word'), structure(paste0(wn_command, " 'word'"), class = c('wn', 'command')))
 })
 
-# TODO
-# test_that("errors related to the 'synset' argument", {
-#   has('ciao', 'hypen', NULL)
-#     has('ciao', 'hypen', NA)
-#     has('ciao', 'hypen', c())
-#     has('ciao', 'hypen', list())
-#     has('ciao', 'hypen', c('')
-#     has('ciao', 'hypen', NA_character_)
-# })
-# 
-# test_that("has information", {
-#   
-# })
+test_that("errors related to the 'synset' argument", {
+  expect_that(has('ciao', 'hypen', NA), throws_error('not a character vector'))
+  expect_that(has('ciao', 'hypen', NA, details = TRUE), throws_error('not a character vector'))
+  expect_that(has('ciao', 'hypen', list()), throws_error('not a character vector'))
+  expect_that(has('ciao', 'hypen', c('')), throws_error('empty or missing values'))
+  expect_that(has('ciao', 'hypen', NA_character_), throws_error('empty or missing values'))
+})
+
+test_that("has information", {
+  expect_true(has('ciao', 'hypen', synset = NULL))
+  expect_equal(
+    has('ciao', 'hypen', synset = NULL, details = TRUE),
+    structure(c(TRUE, FALSE, FALSE, FALSE), .Names = c("noun", "verb", "adj", "adv"))
+  )
+  expect_true(has('ciao', 'hypen', c()))
+  expect_equal(
+    has('ciao', 'hypen', c(), details = TRUE),
+    structure(c(TRUE, FALSE, FALSE, FALSE), .Names = c("noun", "verb", "adj", "adv"))
+  )
+})

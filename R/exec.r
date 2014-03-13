@@ -17,7 +17,7 @@ exec <- function(cmd) {
 print.result <- function(x, ...) {
   cat(
     '* Result:\n',
-    paste(x$result[!grepl('^\\s+$', x$result)], collapse = '\n'),
+    paste(delete_whit(x$result, '\\s*'), collapse = '\n'),
     '\n* Number of senses:\n',
     x$num_senses,
     '\n',

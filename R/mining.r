@@ -42,3 +42,26 @@ extract_offset <- function(str) {
 delete_sensenum <- function(str) {
   return(gsub('\\#\\d+', '', str))
 }
+
+#' Removes elements that matches regexp
+#'
+#' It is vectorized.
+delete_whit <- function(str, regexp) {
+  str[!grepl(paste0('^', regexp , '$'), str)]
+}
+
+#' Indexes a character vector identifying the synset which its elements belong
+#' 
+#' It returns an index.
+identify_synsets <- function(data, synsets = unlist(unname(getOption('wnwr.supported.synset.types')))) {
+  # identify and index synset
+  synset_regex <- paste(synsets, collapse = '|')
+  flags <- grepl(synset_regex, data)
+  nms <- sub(paste0('.*?(', synset_regex, ').*'), '\\1', data) # non greedy match
+  assert_that(length(flags) == length(nms))
+  nms <- nms[flags]
+  index <- cumsum(flags)
+  index <- flatten(tapply(index, index, function(i) setNames(i, rep(nms[i[1]], length(i))), simplify = FALSE))
+  assert_that(length(unique(index)) == length(synsets), !any(unlist(index)) == 0)
+  return(index)
+}

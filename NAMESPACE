@@ -1,4 +1,5 @@
 S3method(print,command)
 S3method(print,result)
+export(has)
 export(hypernyms)
 export(info)
