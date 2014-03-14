@@ -17,7 +17,7 @@ exec <- function(cmd) {
 print.result <- function(x, ...) {
   cat(
     '* Result:\n',
-    paste(delete_whit(x$result, '\\s*'), collapse = '\n'),
+    paste(delete_with(x$result, '\\s*'), collapse = '\n'),
     '\n* Number of senses:\n',
     x$num_senses,
     '\n',

@@ -46,7 +46,7 @@ delete_sensenum <- function(str) {
 #' Removes elements that matches regexp
 #'
 #' It is vectorized.
-delete_whit <- function(str, regexp) {
+delete_with <- function(str, regexp) {
   str[!grepl(paste0('^', regexp , '$'), str)]
 }
 
@@ -62,6 +62,29 @@ identify_synsets <- function(data, synsets = unlist(unname(getOption('wnwr.suppo
   nms <- nms[flags]
   index <- cumsum(flags)
   index <- flatten(tapply(index, index, function(i) setNames(i, rep(nms[i[1]], length(i))), simplify = FALSE))
-  assert_that(length(unique(index)) == length(synsets), !any(unlist(index)) == 0)
+  # assert_that(length(unique(index)) == length(synsets), !any(unlist(index)) == 0)
+  # FIXME: (1) this is a strong assumption, it assumes that each synset exists in data 
+  # FIXME: 1st solution: remove this check
+  # FIXME: 2nd solution: when calling this pass the correct set of available synsets (obtainable via has function)
   return(index)
 }
+
+#' Indexes a character vector identifying the senses which its elements belong
+#' 
+#' It return an index.
+identify_senses <- function(synset_data) {
+  cumsum(grepl('Sense\\s\\d+', synset_data))
+}
+
+#' Builds a list detecting the presence of a signal
+build_list <- function(vect, signal = '=>\\s') {
+  num_spaces <- str_locate(vect, signal)[, 'start']
+  level_groups <- split(vect, num_spaces)
+  depths <- names(level_groups)
+  out <- lapply(seq_along(level_groups), function(i) {
+    sub(paste0('^\\s{0,', depths[[i]], '}', signal), '', level_groups[[i]])
+  })
+  if (is.na(num_spaces[[1]])) out <- c(vect[[1]], out)
+  out
+}
+

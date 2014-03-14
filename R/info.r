@@ -7,13 +7,13 @@ extract_info <- function(info) {
   if (is.null(info)) return(info)
   assert_that(is_result(info))
   # remove empty string elements
-  info <- delete_whit(info$result, '\\s*')
+  info <- delete_with(info$result, '\\s*')
   # retrieve supported search types
   types <- unlist(flatten(getOption('wnwr.supported.search.types')))
   # retrieve supported synset types
   synsets <- unlist(unname(getOption('wnwr.supported.synset.types')))
   # identify and index synset
-  index <- identify_synsets(info)
+  index <- identify_synsets(info, synsets)
   # subset by index as factor
   info <- setNames(
     lapply(split(info, unlist(index)), function(i) {
@@ -52,3 +52,5 @@ has <- function(word, search, synset = NULL, details = FALSE) {
   if (!details) return(any(result))
   else return(result)
 }
+# FIXME: if passed more than one search type it fails!
+

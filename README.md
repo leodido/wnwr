@@ -2,7 +2,7 @@
 
 A <b>w</b>ord<b>n</b>et <b>wr</b>apper.
 
-The current R package contains a set of functions to query the [wordnet](http://wordnet.princeton.edu) lexical database. It extent
+The current R package contains a set of functions to query the [wordnet](http://wordnet.princeton.edu) lexical database. 
 
 ## Why ?
 
@@ -31,8 +31,6 @@ The current R package contains a set of functions to query the [wordnet](http://
 * `search(word, searchtype, option, sense)`
 
 * `hypernyms(word, option, sense)`
-
-* `...`
 
 ## Requirements
 
