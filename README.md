@@ -1,4 +1,5 @@
-# wnwr
+wnwr [![Analytics](https://ga-beacon.appspot.com/UA-49657176-1/wnwr)](https://github.com/igrigorik/ga-beacon)
+=======
 
 A <b>w</b>ord<b>n</b>et <b>wr</b>apper.
 
